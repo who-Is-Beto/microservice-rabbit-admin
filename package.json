@@ -15,7 +15,8 @@
     "pg": "^8.4.0",
     "redis": "^4.1.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "0.3.6"
+    "typeorm": "0.3.6",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/config": "^0.0.41",
