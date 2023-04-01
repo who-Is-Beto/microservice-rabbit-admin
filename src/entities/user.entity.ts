@@ -1,5 +1,6 @@
-import { Column, Entity, Index } from "typeorm";
+import { BeforeInsert, Column, Entity, Index } from "typeorm";
 import Model from "./model.entity";
+import bcrypt from "bcrypt";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -14,6 +15,9 @@ export class User extends Model {
   @Index("email_index")
   @Column({ unique: true })
   email: string;
+
+  @Column()
+  password: string;
 
   @Column({
     type: "enum",
@@ -31,6 +35,15 @@ export class User extends Model {
     default: false
   })
   verified: boolean;
+
+  @BeforeInsert()
+  public async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 12);
+  }
+
+  static async comparePasswords(password: string, hash: string) {
+    return await bcrypt.compare(password, hash);
+  }
 
   toJSON() {
     return {

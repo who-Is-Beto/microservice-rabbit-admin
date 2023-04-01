@@ -8,6 +8,8 @@
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "config": "^3.3.7",
     "dotenv": "^16.0.0",
     "envalid": "^7.3.1",
