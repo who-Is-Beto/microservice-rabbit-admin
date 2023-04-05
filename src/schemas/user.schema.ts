@@ -46,4 +46,4 @@ export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>["body"],
   "passwordConfirmation"
 >;
-export type LoginInput = TypeOf<typeof loginSchema>["body"];
+export type LoginUserInput = TypeOf<typeof loginSchema>["body"];
