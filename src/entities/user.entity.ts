@@ -41,7 +41,7 @@ export class User extends Model {
     this.password = await bcrypt.hash(this.password, 12);
   }
 
-  static async comparePasswords(password: string, hash: string) {
+  public static async comparePasswords(password: string, hash: string) {
     return await bcrypt.compare(password, hash);
   }
 
