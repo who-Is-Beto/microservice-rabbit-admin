@@ -131,7 +131,11 @@ export const refreshAccessTokenHandler = async (
 
     const session = await redisClient.get(decodedToken.sub);
 
-    const user = await findUserById(JSON.parse(session!).userId);
+    if (!session) {
+      return next(new AppError(403, message));
+    }
+
+    const user = await findUserById(JSON.parse(session).id);
 
     if (!user) {
       return next(new AppError(403, message));
