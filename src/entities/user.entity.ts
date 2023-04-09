@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, Index } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, OneToMany } from "typeorm";
 import Model from "./model.entity";
 import bcrypt from "bcrypt";
+import { Follows } from "./follow.entity";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -35,6 +36,12 @@ export class User extends Model {
     default: false
   })
   verified: boolean;
+
+  @OneToMany(() => Follows, (follow: Follows) => follow.followers)
+  followers: Follows[];
+
+  @OneToMany(() => Follows, (follow: Follows) => follow.following)
+  following: Follows[];
 
   @BeforeInsert()
   public async hashPassword() {

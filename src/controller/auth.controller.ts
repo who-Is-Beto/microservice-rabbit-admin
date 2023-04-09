@@ -84,15 +84,15 @@ export const loginUserHandler = async (
   try {
     const { email, password } = req.body;
     const user = await findUserByEmail({ email });
-
+    
     if (!user || !(await User.comparePasswords(password, user.password))) {
       return next(new AppError(400, "Invalid email or password"));
     }
 
-    const { accessToken, refreshToken } = await signTokens(user);
+    const { access_token, refresh_token } = await signTokens(user);
 
-    res.cookie("access_token", accessToken, accessTokenCookieOptions);
-    res.cookie("refresh_token", refreshToken, refreshTokenCookieOptions);
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
+    res.cookie("refresh_token", refresh_token, refreshTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false
@@ -100,9 +100,10 @@ export const loginUserHandler = async (
 
     res.status(200).json({
       status: "success",
-      accessToken
+      access_token
     });
   } catch (err: any) {
+    console.log('ERROR HEREREE', err)
     next(err);
   }
 };
@@ -141,9 +142,9 @@ export const refreshAccessTokenHandler = async (
       return next(new AppError(403, message));
     }
 
-    const { accessToken } = await signTokens(user);
+    const { access_token } = await signTokens(user);
 
-    res.cookie("access_token", accessToken, accessTokenCookieOptions);
+    res.cookie("access_token", access_token, accessTokenCookieOptions);
     res.cookie("logged_in", true, {
       ...accessTokenCookieOptions,
       httpOnly: false
@@ -151,7 +152,7 @@ export const refreshAccessTokenHandler = async (
 
     res.status(200).json({
       status: "success",
-      accessToken
+      access_token
     });
   } catch (err: any) {
     next(err);
