@@ -1,23 +1,24 @@
-import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
-import Model from "./model.entity";
-import { User } from "./user.entity";
+import { Column, Entity } from 'typeorm';
+import Model from './model.entity';
 
 export enum FollowStatus {
-  blocked = "blocked",
-  accepted = "accepted",
-  pending = "pending"
+  blocked = 'blocked',
+  accepted = 'accepted',
+  pending = 'pending',
 }
 
 @Entity('follows')
 export class Follows extends Model {
-  @ManyToMany(() => User, (user) => user.followers)
-  @JoinTable({name: 'followers_id'})
-  followers: User[];
+  @Column()
+  user_to_id: string;
 
-  @ManyToMany(() => User, (user) => user.following)
-  @JoinTable({name: 'following_id'})
-  following: User;
+  @Column()
+  user_from_id: string;
 
-  @Column({type: 'enum', enum: FollowStatus, default: FollowStatus.pending})
+  @Column({
+    type: 'enum',
+    enum: FollowStatus,
+    default: FollowStatus.pending,
+  })
   status: FollowStatus;
 }
