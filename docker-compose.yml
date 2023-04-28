@@ -1,12 +1,12 @@
-version: "3"
+version: '3'
 services:
   postgres:
     image: postgres:latest
     container_name: postgres
     ports:
-      - "6500:5432"
+      - '6500:5432'
     volumes:
-      - progresDB:/var/lib/postgresql/data
+      - progresDB:/var/lib/postgresql/data2
     env_file:
       - ./.env
 
@@ -14,7 +14,7 @@ services:
     image: redis:alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redisDB:/data
 volumes:

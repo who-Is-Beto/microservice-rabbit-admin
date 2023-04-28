@@ -1,19 +1,18 @@
-import { BeforeInsert, Column, Entity, Index, OneToMany } from "typeorm";
-import Model from "./model.entity";
-import bcrypt from "bcrypt";
-import { Follows } from "./follow.entity";
+import { BeforeInsert, Column, Entity, Index, OneToMany } from 'typeorm';
+import Model from './model.entity';
+import bcrypt from 'bcrypt';
 
 export enum UserRole {
-  ADMIN = "admin",
-  USER = "user"
+  ADMIN = 'admin',
+  USER = 'user',
 }
 
-@Entity("users")
+@Entity('users')
 export class User extends Model {
   @Column()
   name: string;
 
-  @Index("email_index")
+  @Index('email_index')
   @Column({ unique: true })
   email: string;
 
@@ -21,27 +20,21 @@ export class User extends Model {
   password: string;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: UserRole,
-    default: UserRole.USER
+    default: UserRole.USER,
   })
   role: UserRole.USER;
 
   @Column({
-    default: "image.png"
+    default: 'image.png',
   })
   photo: string;
 
   @Column({
-    default: false
+    default: false,
   })
   verified: boolean;
-
-  @OneToMany(() => Follows, (follow: Follows) => follow.followers)
-  followers: Follows[];
-
-  @OneToMany(() => Follows, (follow: Follows) => follow.following)
-  following: Follows[];
 
   @BeforeInsert()
   public async hashPassword() {
@@ -56,7 +49,7 @@ export class User extends Model {
     return {
       ...this,
       password: undefined,
-      verified: undefined
+      verified: undefined,
     };
   }
 }
